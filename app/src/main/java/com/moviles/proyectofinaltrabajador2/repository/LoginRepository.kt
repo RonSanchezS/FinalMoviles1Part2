@@ -4,6 +4,7 @@ import android.content.Context
 import android.widget.Toast
 import com.moviles.proyectofinaltrabajador2.apis.LoginApi
 import com.moviles.proyectofinaltrabajador2.models.LoginResponse
+import com.moviles.proyectofinaltrabajador2.models.Usuario
 import com.moviles.proyectofinaltrabajador2.models.Worker
 import com.moviles.proyectofinaltrabajador2.models.WorkerLogin
 import retrofit2.Call
@@ -12,7 +13,7 @@ import retrofit2.Response
 
 object LoginRepository {
 
-    fun register(worker: Worker, context: Context, listener : onRegisterListener) {
+    fun register(worker: Worker, context: Context, listener: onRegisterListener) {
         val retrofit = RetrofitRepository.getRetrofit()
         val service = retrofit.create(LoginApi::class.java)
         service.register(worker)
@@ -53,11 +54,36 @@ object LoginRepository {
                 }
 
                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                   loginlistener.onFailure(t)
+                    loginlistener.onFailure(t)
                 }
 
 
             })
+    }
+
+    fun getDatosLogin(listener: onDatosLoginListener) {
+        val retrofit = RetrofitRepository.getRetrofit()
+        val service = retrofit.create(LoginApi::class.java)
+        service.getDatosDelLogin()
+            .enqueue(object : Callback<Usuario> {
+                override fun onResponse(call: Call<Usuario>, response: Response<Usuario>) {
+                    //listener.onSuccess(response.body()!!)
+                    println(response.body())
+
+
+                }
+
+                override fun onFailure(call: Call<Usuario>, t: Throwable) {
+                    listener.onFailure(t)
+                }
+
+
+            })
+    }
+
+    interface onDatosLoginListener {
+        fun onFailure(t: Throwable)
+
     }
 
     interface onLoginListener {
