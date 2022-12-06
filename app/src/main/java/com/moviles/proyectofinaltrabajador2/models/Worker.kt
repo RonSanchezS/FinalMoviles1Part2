@@ -12,6 +12,7 @@ data class Worker (
 
 ){
     @SerializedName("id") val id : Int? = 0
+    @SerializedName("profilePicture") val profilePicture : String? = null
 
     override fun toString(): String {
         return "worker(name=$name, email=$email, password=$password, phone=$phone)"
