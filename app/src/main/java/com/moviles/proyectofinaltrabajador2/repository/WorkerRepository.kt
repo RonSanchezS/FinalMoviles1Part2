@@ -1,5 +1,6 @@
 package com.moviles.proyectofinaltrabajador2.repository
 
+import com.moviles.proyectofinaltrabajador2.Items.CotizacionConpleta
 import com.moviles.proyectofinaltrabajador2.apis.WorkerApi
 import com.moviles.proyectofinaltrabajador2.models.WorkerCompleto
 import retrofit2.Call
@@ -26,6 +27,33 @@ object WorkerRepository {
             }
 
         })
+
+    }
+
+    fun getCotizaciones(listenerCotizacion : onCotizacionListener){
+        val retrofit = RetrofitRepository.getRetrofit()
+        val service = retrofit.create(WorkerApi::class.java)
+       service.getCotizaciones().enqueue(object : Callback<List<CotizacionConpleta>> {
+            override fun onFailure(call: Call<List<CotizacionConpleta>>, t: Throwable) {
+                listenerCotizacion.onFailure(t)
+            }
+
+            override fun onResponse(call: Call<List<CotizacionConpleta>>, response: Response<List<CotizacionConpleta>>) {
+                if(response.isSuccessful){
+                    val cotizaciones = response.body()
+                    listenerCotizacion.onSuccess(cotizaciones)
+                }else{
+                    listenerCotizacion.onFailure(Throwable("Error en la respuesta"))
+                }
+            }
+
+        })
+
+    }
+
+    interface onCotizacionListener {
+        fun onFailure(t: Throwable)
+        fun onSuccess(cotizaciones: List<CotizacionConpleta>?)
 
     }
 

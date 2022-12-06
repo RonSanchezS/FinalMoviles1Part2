@@ -16,6 +16,6 @@ interface WorkerApi {
     fun getWorkerCompleto(@Path("id") id: String): Call<WorkerCompleto>
 
     @Headers("Authorization: Bearer 89|MI8jytv2cqhMLExO9tL3VliwDXgsgrJYp7SLTl5l")
-    @GET("worker/works")
+    @GET("client/works")
     fun getCotizaciones(): Call<List<CotizacionConpleta>>
 }

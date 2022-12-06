@@ -10,4 +10,7 @@ data class WorkerCompleto(
     @SerializedName("user"           ) var user           : Usuario?                 = Usuario(),
     @SerializedName("categories"     ) var categories     : ArrayList<Categories> = arrayListOf()
 ) {
+    override fun toString(): String {
+        return "WorkerCompleto(id=$id, phone=$phone, profilePicture=$profilePicture, reviewAvg=$reviewAvg, user=$user, categories=$categories)"
+    }
 }

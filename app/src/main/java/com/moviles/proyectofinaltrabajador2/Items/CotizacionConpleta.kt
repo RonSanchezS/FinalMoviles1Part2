@@ -23,4 +23,7 @@ class CotizacionConpleta(
 
 
 ) {
+    override fun toString(): String {
+        return "CotizacionConpleta(id=$id, clientId=$clientId, workerId=$workerId, categoryId=$categoryId, status=$status, priceOffer=$priceOffer, review=$review, deliveryLatitude=$deliveryLatitude, deliveryLongitude=$deliveryLongitude, deliveryAddress=$deliveryAddress, client=$client, worker=$worker, category=$category)"
+    }
 }
