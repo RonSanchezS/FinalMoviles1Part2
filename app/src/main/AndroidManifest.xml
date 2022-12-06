@@ -16,21 +16,21 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ActivityEditarCapacidades"
+            android:name=".ActivitiesAvanzadas.ActivityEditarCapacidades"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ActivityVerCotizaciones"
+            android:name=".ActivitiesAvanzadas.ActivityVerCotizaciones"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ActivityVerCapacidades"
+            android:name=".ActivitiesAvanzadas.ActivityVerCapacidades"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

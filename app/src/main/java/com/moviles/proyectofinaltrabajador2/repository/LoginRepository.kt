@@ -67,8 +67,7 @@ object LoginRepository {
         service.getDatosDelLogin()
             .enqueue(object : Callback<Usuario> {
                 override fun onResponse(call: Call<Usuario>, response: Response<Usuario>) {
-                    //listener.onSuccess(response.body()!!)
-                    println(response.body())
+                    listener.onSuccess(response.body()!!)
 
 
                 }
@@ -83,6 +82,7 @@ object LoginRepository {
 
     interface onDatosLoginListener {
         fun onFailure(t: Throwable)
+        fun onSuccess(body: Usuario)
 
     }
 
