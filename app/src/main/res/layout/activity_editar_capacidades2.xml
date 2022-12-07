@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditarCapacidad.ActivityEditarCapacidades">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="50px"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Categoria" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="373dp"
+            android:layout_height="41dp" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Que puedes hacer" />
+
+        <EditText
+            android:id="@+id/txtDescripcionCapacidad"
+            android:layout_width="match_parent"
+            android:layout_height="225dp"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="Puedo construir una casa, creac planos arquitectonicos, llevar al hombre a la luna..."
+            android:inputType="textMultiLine" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Guardar" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

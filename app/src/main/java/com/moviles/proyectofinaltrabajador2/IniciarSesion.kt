@@ -3,6 +3,7 @@ package com.moviles.proyectofinaltrabajador2
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.text.method.TextKeyListener.clear
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -22,6 +23,7 @@ class IniciarSesion : AppCompatActivity(), LoginRepository.onLoginListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_iniciar_sesion)
+
         setUpSharedPref()
         if (getSharedPreferences("MyPref", MODE_PRIVATE).contains("token")) {
             val intent = Intent(this, HomeActivity::class.java)
@@ -38,6 +40,7 @@ class IniciarSesion : AppCompatActivity(), LoginRepository.onLoginListener {
     private fun setUpSharedPref() {
         val pref = applicationContext.getSharedPreferences("MyPref", 0) // 0 - for private mode
         editor = pref.edit()
+       
     }
 
     private fun setUpListeners() {

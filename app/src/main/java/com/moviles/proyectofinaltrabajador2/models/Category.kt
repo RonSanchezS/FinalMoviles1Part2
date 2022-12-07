@@ -8,4 +8,7 @@ class Category(
     @SerializedName("name" ) var name : String? = null,
     @SerializedName("icon" ) var icon : String? = null
 ) {
+    override fun toString(): String {
+        return "$name"
+    }
 }
