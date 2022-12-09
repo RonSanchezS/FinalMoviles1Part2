@@ -23,7 +23,14 @@ class ActivityVerCapacidades : AppCompatActivity(), WorkerRepository.onCapacidad
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ver_capacidades)
         setUpListView()
-        WorkerRepository.getWorkerCompleto(1, this)
+        setUpCallFromApi()
+    }
+
+    private fun setUpCallFromApi() {
+        val token = getSharedPreferences("MyPref", MODE_PRIVATE).getString("token", "")
+        if (token != null) {
+            WorkerRepository.getWorkerCompleto(1, this, "Bearer $token")
+        }
     }
 
     private fun setUpListView() {

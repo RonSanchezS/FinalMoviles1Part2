@@ -55,5 +55,10 @@ class HomeActivity : AppCompatActivity(), LoginRepository.onDatosLoginListener {
     override fun onSuccess(body: Usuario) {
         txtNombreUsuario.text = body.name
 
+        val pref = applicationContext.getSharedPreferences("MyPref", 0) // 0 - for private mode
+        val editor = pref.edit()
+        editor.putString("id", body.id.toString())
+        editor.apply()
+
     }
 }

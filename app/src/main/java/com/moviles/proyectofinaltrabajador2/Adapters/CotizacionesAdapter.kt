@@ -31,6 +31,11 @@ class CotizacionesAdapter(
         val cotizacion = data[position]
         holder.txtNombreCotizacion.text = cotizacion.client?.user?.name
         holder.btnDescartar.visibility = View.GONE
+        //add onClickListener
+        holder.itemView.setOnClickListener {
+            listener.onCotizacionClick(cotizacion)
+        }
+
         if (cotizacion.priceOffer == null) {
             holder.txtPrecioCotizacion.text = "Sin cotizar"
         }else{

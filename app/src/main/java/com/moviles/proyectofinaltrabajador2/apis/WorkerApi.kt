@@ -15,14 +15,14 @@ import retrofit2.http.Path
 interface WorkerApi {
 
 
-    @Headers("Content-Type: application/json", "Authorization: Bearer 89|MI8jytv2cqhMLExO9tL3VliwDXgsgrJYp7SLTl5l")
+    @Headers("Content-Type: application/json")
     @GET("worker/{id}")
-    fun getWorkerCompleto(@Path("id") id: String): Call<WorkerCompleto>
+    fun getWorkerCompleto(@Path("id") id: String, @Header("Authorization") token : String): Call<WorkerCompleto>
 
-    @Headers("Authorization: Bearer 89|MI8jytv2cqhMLExO9tL3VliwDXgsgrJYp7SLTl5l")
-    @GET("client/works")
-    fun getCotizaciones(): Call<List<CotizacionConpleta>>
+   // @Headers("Authorization: Bearer 89|MI8jytv2cqhMLExO9tL3VliwDXgsgrJYp7SLTl5l")
+    @GET("worker/works")
+    fun getCotizaciones(@Header("Authorization")token : String): Call<List<CotizacionConpleta>>
 
     @POST("work/{id}/price")
-    fun ofertarCotizacion(@Path("id") id : String, @Header("Authorization") token : String, @Body precio : Precio) : Call<Void>
+    fun ofertarCotizacion(@Path("id") id : String, @Header("Authorization") token : String, @Body precio : Precio) : Call<CotizacionConpleta>
 }
