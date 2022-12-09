@@ -1,7 +1,10 @@
 package com.moviles.proyectofinaltrabajador2.ActivitiesAvanzadas
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.moviles.proyectofinaltrabajador2.Adapters.CotizacionesAdapter
@@ -42,5 +45,15 @@ class ActivityVerCotizaciones : AppCompatActivity(), WorkerRepository.onCotizaci
 
     override fun onCotizacionClick(cotizacion: CotizacionConpleta) {
         TODO("Not yet implemented")
+    }
+    }
+
+    override fun onSendCostClick(cotizacion: CotizacionConpleta) {
+        Toast.makeText(this, "Enviando cotizacion numero ${cotizacion.id}", Toast.LENGTH_SHORT).show()
+        val intent = Intent(this, ActivityCostoCotizacion::class.java)
+        intent.putExtra("COTIZACIONID", cotizacion.id)
+        startActivity(intent)
+
+
     }
 }

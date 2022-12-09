@@ -15,7 +15,7 @@ interface LoginApi {
     @POST("worker/login")
     fun login(@Body worker: WorkerLogin): Call<LoginResponse>
 
-    @Headers("Content-Type: application/json", "Accept: application/json", "Authorization: Bearer 151|zFBtMsyfSJpEBUB6hQcX9A4qzqtZTlrzGAXPELy7")
+    @Headers("Content-Type: application/json", "Accept: application/json")
     @GET("me")
-    fun getDatosDelLogin(): Call<Usuario>
+    fun getDatosDelLogin(@Header("Authorization") auth : String): Call<Usuario>
 }

@@ -2,6 +2,7 @@ package com.moviles.proyectofinaltrabajador2.repository
 
 import com.moviles.proyectofinaltrabajador2.Items.CotizacionConpleta
 import com.moviles.proyectofinaltrabajador2.apis.WorkerApi
+import com.moviles.proyectofinaltrabajador2.models.Precio
 import com.moviles.proyectofinaltrabajador2.models.WorkerCompleto
 import retrofit2.Call
 import retrofit2.Callback
@@ -49,6 +50,31 @@ object WorkerRepository {
 
         })
 
+    }
+    fun ofertarCotizacion(token : String , id : String,listener : listenerCotizacion, precio : Precio){
+        val retrofit = RetrofitRepository.getRetrofit()
+        val service = retrofit.create(WorkerApi::class.java)
+        service.ofertarCotizacion(id, token, precio).enqueue(object : Callback<Void> {
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                listener.onFailure(t)
+            }
+
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                if(response.isSuccessful){
+                    val cotizaciones = response.body()
+                    listener.onSuccess(cotizaciones)
+                }else{
+                    listener.onFailure(Throwable("Error en la respuesta"))
+                }
+            }
+
+        })
+
+    }
+
+    interface listenerCotizacion {
+        fun onFailure(t : Throwable)
+        fun onSuccess(cotizaciones: Void?)
     }
 
     interface onCotizacionListener {

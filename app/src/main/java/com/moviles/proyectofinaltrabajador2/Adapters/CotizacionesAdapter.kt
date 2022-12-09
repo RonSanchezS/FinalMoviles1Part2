@@ -40,6 +40,9 @@ class CotizacionesAdapter(
             0 -> {
                 holder.txtEstadoCotizacion.text = "Pendiente"
                 holder.btnAccion.text = "Enviar costo"
+                holder.btnAccion.setOnClickListener {
+                    listener.onSendCostClick(cotizacion)
+                }
 
             }
             1 -> {
@@ -92,5 +95,6 @@ class CotizacionesAdapter(
 
     interface OnCotizacionClickListener {
         fun onCotizacionClick(cotizacion: CotizacionConpleta)
+         fun onSendCostClick(cotizacion: CotizacionConpleta)
     }
 }

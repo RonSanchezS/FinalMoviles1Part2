@@ -61,14 +61,16 @@ object LoginRepository {
             })
     }
 
-    fun getDatosLogin(listener: onDatosLoginListener) {
+    fun getDatosLogin(listener: onDatosLoginListener, token : String) {
         val retrofit = RetrofitRepository.getRetrofit()
         val service = retrofit.create(LoginApi::class.java)
-        service.getDatosDelLogin()
+        //get token from shared preferences
+        service.getDatosDelLogin(token)
             .enqueue(object : Callback<Usuario> {
                 override fun onResponse(call: Call<Usuario>, response: Response<Usuario>) {
                     listener.onSuccess(response.body()!!)
-
+                println("///////////////////")
+                println(response.body())
 
                 }
 

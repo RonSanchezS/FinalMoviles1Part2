@@ -22,12 +22,16 @@ class HomeActivity : AppCompatActivity(), LoginRepository.onDatosLoginListener {
 
         setUpListView()
         setUpListeners()
-        LoginRepository.getDatosLogin(this)
+        //get token from shared prefferences
+        val token = getSharedPreferences("MyPref", MODE_PRIVATE).getString("token", "")
+        if (token != null) {
+            LoginRepository.getDatosLogin(this, "Bearer $token")
+        }
     }
 
     private fun setUpListeners() {
         btnCapacidades.setOnClickListener {
-         val intent = Intent(this, ActivityVerCapacidades::class.java)
+            val intent = Intent(this, ActivityVerCapacidades::class.java)
             startActivity(intent)
         }
         btnCotizaciones.setOnClickListener {

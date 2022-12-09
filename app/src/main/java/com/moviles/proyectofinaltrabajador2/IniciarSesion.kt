@@ -23,6 +23,8 @@ class IniciarSesion : AppCompatActivity(), LoginRepository.onLoginListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_iniciar_sesion)
+//delete token from shared preferences
+
 
         setUpSharedPref()
         if (getSharedPreferences("MyPref", MODE_PRIVATE).contains("token")) {

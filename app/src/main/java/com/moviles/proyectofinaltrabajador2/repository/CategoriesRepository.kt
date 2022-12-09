@@ -12,10 +12,10 @@ import retrofit2.Response
 
 object CategoriesRepository {
 
-    fun getCategories(listener: onCategoriesListener) {
+    fun getCategories(listener: onCategoriesListener, token : String) {
         val retrofit = RetrofitRepository.getRetrofit()
         val service = retrofit.create(CategoriesApi::class.java)
-        service.getCategories().enqueue(object : Callback<List<Category>> {
+        service.getCategories(token).enqueue(object : Callback<List<Category>> {
             override fun onResponse(
                 call: Call<List<Category>>,
                 response: Response<List<Category>>
@@ -34,10 +34,10 @@ object CategoriesRepository {
         })
     }
 
-    fun postCategoryForWorker(categoria : CategoryPost, listener : onCategoriesPostListener){
+    fun postCategoryForWorker(categoria : CategoryPost, listener : onCategoriesPostListener, token : String){
         val retrofit = RetrofitRepository.getRetrofit()
         val service = retrofit.create(CategoriesApi::class.java)
-        service.postCategory(categoria).enqueue(object : Callback<CategoriesPostResponse>{
+        service.postCategory(categoria, token).enqueue(object : Callback<CategoriesPostResponse>{
             override fun onResponse(
                 call: Call<CategoriesPostResponse>,
                 response: Response<CategoriesPostResponse>

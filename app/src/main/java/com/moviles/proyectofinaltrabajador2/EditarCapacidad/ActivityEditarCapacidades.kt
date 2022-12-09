@@ -33,7 +33,9 @@ class ActivityEditarCapacidades : AppCompatActivity(), CategoriesRepository.onCa
         spinner = findViewById(R.id.spinner)
         txtDescrpicionCapacidad = findViewById(R.id.txtDescripcionCapacidad)
 
-        CategoriesRepository.getCategories(this)
+        val token = "Bearer " + getSharedPreferences("MyPref", MODE_PRIVATE).getString("token", "null")
+
+        CategoriesRepository.getCategories(this, token)
         btnGuardar = findViewById(R.id.button)
         btnGuardar.setOnClickListener {
             val categoria = spinner.selectedItem.toString()
@@ -44,7 +46,7 @@ class ActivityEditarCapacidades : AppCompatActivity(), CategoriesRepository.onCa
                 //CategoriesRepository.addCapacidad(capacidad)
             }else{
                 //add capacidad to a preexisting worker
-                CategoriesRepository.postCategoryForWorker(CategoryPost(categoria, descripcion), this)
+                CategoriesRepository.postCategoryForWorker(CategoryPost(categoria, descripcion), this, token)
             }
             finish()
 
