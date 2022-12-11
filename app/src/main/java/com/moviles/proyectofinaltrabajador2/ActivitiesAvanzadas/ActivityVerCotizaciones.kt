@@ -12,10 +12,12 @@ import com.moviles.proyectofinaltrabajador2.Adapters.CotizacionesAdapter
 import com.moviles.proyectofinaltrabajador2.ConversacionActivity
 import com.moviles.proyectofinaltrabajador2.Items.CotizacionConpleta
 import com.moviles.proyectofinaltrabajador2.R
+import com.moviles.proyectofinaltrabajador2.repository.ConversacionRepository
 import com.moviles.proyectofinaltrabajador2.repository.WorkerRepository
 
 class ActivityVerCotizaciones : AppCompatActivity(), WorkerRepository.onCotizacionListener,
-    CotizacionesAdapter.OnCotizacionClickListener {
+    CotizacionesAdapter.OnCotizacionClickListener,
+    ConversacionRepository.onCotizacionFinalizadaListener {
 
     private lateinit var recyclerCotizaciones: RecyclerView
 
@@ -55,6 +57,9 @@ class ActivityVerCotizaciones : AppCompatActivity(), WorkerRepository.onCotizaci
        Toast.makeText(this, "Cotizacion: ${cotizacion.id}", Toast.LENGTH_SHORT).show()
         val intent = Intent(this, ConversacionActivity::class.java)
         intent.putExtra("idCotizacion", cotizacion.id)
+        intent.putExtra("latitude", cotizacion.deliveryLatitude)
+        intent.putExtra("longitude", cotizacion.deliveryLongitude)
+        intent.putExtra("indicaciones", cotizacion.deliveryAddress)
         startActivity(intent)
     }
 
@@ -63,6 +68,21 @@ class ActivityVerCotizaciones : AppCompatActivity(), WorkerRepository.onCotizaci
         val intent = Intent(this, ActivityCostoCotizacion::class.java)
         intent.putExtra("COTIZACIONID", cotizacion.id)
         startActivity(intent)
+    }
+
+    override fun onFinalizadoClick(cotizacion: CotizacionConpleta) {
+        val token = getSharedPreferences("MyPref", MODE_PRIVATE).getString("token", "")
+        if (token != null) {
+            ConversacionRepository.finalizarCotizacion(cotizacion.id.toString(),token, this)
+        }
+    }
+
+    override fun onCotizacionFinalizadaFailure(t: Throwable) {
+        println(t.message)
+    }
+
+    override fun onCotizacionFinalizadaSuccess() {
+        finish()
     }
 }
 

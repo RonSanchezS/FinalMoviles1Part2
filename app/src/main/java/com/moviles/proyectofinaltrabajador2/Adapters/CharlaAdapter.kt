@@ -4,8 +4,10 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.gms.maps.MapView
@@ -24,7 +26,12 @@ class CharlaAdapter(val data: ArrayList<Charla>, val idLocal: String) :
         val mapaSaliente = itemView.findViewById<MapView>(R.id.mapaSaliente)
         val imagenEntrante = itemView.findViewById<ImageView>(R.id.imagenEntrante)
         val imagenSaliente = itemView.findViewById<ImageView>(R.id.imagenSaliente)
+
+        val btnEnviarImagen = itemView.findViewById<ImageButton>(R.id.btnEnviarImagen)
+        val btnEnviarMapa = itemView.findViewById<ImageButton>(R.id.btnEnviarUbicacion)
     }
+
+
 
 
     override fun onCreateViewHolder(
@@ -37,6 +44,7 @@ class CharlaAdapter(val data: ArrayList<Charla>, val idLocal: String) :
 
     override fun onBindViewHolder(holder: CharlaAdapter.CharlaViewHolder, position: Int) {
         val itemCharla = data[position]
+
         if (itemCharla.userId == idLocal.toInt()) {
             if (itemCharla.latitude != null && itemCharla.longitude != null) {
                 holder.mapaSaliente.visibility = View.VISIBLE

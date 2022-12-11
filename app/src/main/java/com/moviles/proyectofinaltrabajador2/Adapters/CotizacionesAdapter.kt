@@ -57,7 +57,10 @@ class CotizacionesAdapter(
             }
             2 -> {
                 holder.txtEstadoCotizacion.text = "Aceptada"
-                holder.btnAccion.visibility = View.GONE
+                holder.btnAccion.text = "Finalizar"
+                holder.btnAccion.setOnClickListener {
+                    listener.onFinalizadoClick(cotizacion)
+                }
 
             }
             -2 -> {
@@ -67,7 +70,7 @@ class CotizacionesAdapter(
             }
             3 -> {
                 holder.txtEstadoCotizacion.text = "Finalizada"
-
+                holder.btnAccion.visibility = View.GONE
             }
             -3 -> {holder.txtEstadoCotizacion.text = "Descartado"
                 //hide button
@@ -101,5 +104,6 @@ class CotizacionesAdapter(
     interface OnCotizacionClickListener {
         fun onCotizacionClick(cotizacion: CotizacionConpleta)
          fun onSendCostClick(cotizacion: CotizacionConpleta)
+        fun onFinalizadoClick(cotizacion: CotizacionConpleta)
     }
 }
