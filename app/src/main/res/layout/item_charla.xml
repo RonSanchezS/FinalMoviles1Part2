@@ -27,5 +27,43 @@
             android:fontFamily="@font/roboto_medium"
             android:text="TextView"
             tools:text="Buenas tardes, quisiera una orden de tacos asados al pastor, triple salsa y extra large" />
+
+        <TextView
+            android:id="@+id/nombreUsuarioLocal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="Juanito Manos largas" />
+
+        <TextView
+            android:id="@+id/mensajeLocal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="Y si no quiero que a la verga, miren todos jaj quiere tacos en una aplicacion de trabajo" />
+
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/mapaEntrante"
+            android:layout_width="118dp"
+            android:layout_height="128dp" />
+
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/mapaSaliente"
+            android:layout_width="120dp"
+            android:layout_height="132dp"
+            android:layout_gravity="right" />
+
+        <ImageView
+            android:id="@+id/imagenEntrante"
+            android:layout_width="141dp"
+            android:layout_height="141dp"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <ImageView
+            android:id="@+id/imagenSaliente"
+            android:layout_width="141dp"
+            android:layout_height="141dp"
+            android:layout_gravity="right"
+            tools:srcCompat="@tools:sample/avatars" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

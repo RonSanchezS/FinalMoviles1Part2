@@ -9,7 +9,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 object WorkerRepository {
-    fun getWorkerCompleto(id : Int,listener : onCapacidadListener, token  : String){
+    fun getWorkerCompleto(id : String,listener : onCapacidadListener, token  : String){
         val retrofit = RetrofitRepository.getRetrofit()
         val service = retrofit.create(WorkerApi::class.java)
         service.getWorkerCompleto(id.toString(), token).enqueue(object : Callback<WorkerCompleto> {

@@ -1,13 +1,12 @@
 package com.moviles.proyectofinaltrabajador2.ActivitiesAvanzadas
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.moviles.proyectofinaltrabajador2.Adapters.CapacidadesAdapter
-import com.moviles.proyectofinaltrabajador2.Items.CotizacionConpleta
 import com.moviles.proyectofinaltrabajador2.R
 import com.moviles.proyectofinaltrabajador2.models.Categories
 import com.moviles.proyectofinaltrabajador2.models.WorkerCompleto
@@ -28,8 +27,11 @@ class ActivityVerCapacidades : AppCompatActivity(), WorkerRepository.onCapacidad
 
     private fun setUpCallFromApi() {
         val token = getSharedPreferences("MyPref", MODE_PRIVATE).getString("token", "")
+        val idTrabajador = intent?.extras?.get("idTrabajador").toString()
+        println("token: $token")
+        println("idTrabajador: $idTrabajador")
         if (token != null) {
-            WorkerRepository.getWorkerCompleto(1, this, "Bearer $token")
+            WorkerRepository.getWorkerCompleto(idTrabajador, this, "Bearer $token")
         }
     }
 
@@ -54,7 +56,11 @@ class ActivityVerCapacidades : AppCompatActivity(), WorkerRepository.onCapacidad
         recyclerCapacidades.adapter = adapter
 
     }
+    override fun onResume() {
+        super.onResume()
+        setUpCallFromApi()
 
+    }
     override fun onCapacidadClickListener(capacidad: Categories) {
         val intent  = Intent(this, com.moviles.proyectofinaltrabajador2.EditarCapacidad.ActivityEditarCapacidades::class.java)
         intent.putExtra("nombre", capacidad.category?.name)

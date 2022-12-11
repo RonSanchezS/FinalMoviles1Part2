@@ -14,8 +14,10 @@ class HomeActivity : AppCompatActivity(), LoginRepository.onDatosLoginListener {
 
     private lateinit var btnCapacidades: Button
     private lateinit var btnCotizaciones: Button
+    private lateinit var btnLogout: Button
     private lateinit var txtNombreUsuario: TextView
 
+    private lateinit var idUsuario : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -24,6 +26,7 @@ class HomeActivity : AppCompatActivity(), LoginRepository.onDatosLoginListener {
         setUpListeners()
         //get token from shared prefferences
         val token = getSharedPreferences("MyPref", MODE_PRIVATE).getString("token", "")
+        println("token: $token")
         if (token != null) {
             LoginRepository.getDatosLogin(this, "Bearer $token")
         }
@@ -32,17 +35,27 @@ class HomeActivity : AppCompatActivity(), LoginRepository.onDatosLoginListener {
     private fun setUpListeners() {
         btnCapacidades.setOnClickListener {
             val intent = Intent(this, ActivityVerCapacidades::class.java)
+            intent.putExtra("idTrabajador", idUsuario)
             startActivity(intent)
         }
         btnCotizaciones.setOnClickListener {
             val intent = Intent(this,ActivityVerCotizaciones::class.java)
             startActivity(intent)
         }
+        btnLogout.setOnClickListener {
+            //
+            val sharedPreferences = getSharedPreferences("MyPref", MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            editor.clear()
+            editor.apply()
+            finish()
+        }
     }
 
     private fun setUpListView() {
         btnCapacidades = findViewById(R.id.btnVerCapacidades)
         btnCotizaciones = findViewById(R.id.btnVerCotizaciones)
+        btnLogout = findViewById(R.id.btnLogout)
         txtNombreUsuario = findViewById(R.id.txtNombreUsuario)
 
 
@@ -54,7 +67,7 @@ class HomeActivity : AppCompatActivity(), LoginRepository.onDatosLoginListener {
 
     override fun onSuccess(body: Usuario) {
         txtNombreUsuario.text = body.name
-
+        idUsuario = body.id.toString()
         val pref = applicationContext.getSharedPreferences("MyPref", 0) // 0 - for private mode
         val editor = pref.edit()
         editor.putString("id", body.id.toString())

@@ -70,15 +70,13 @@ class IniciarSesion : AppCompatActivity(), LoginRepository.onLoginListener {
     }
 
     override fun onSuccess(body: LoginResponse) {
-        //save body in shared preferences
         editor.putString("token", body.access_token)
         editor.commit()
-//        Toast.makeText(this, "Login exitoso", Toast.LENGTH_SHORT).show()
-//        Toast.makeText(this, "Token: ${body.access_token}", Toast.LENGTH_SHORT).show()
+        editor.apply()
+        println("TOKEN NUEVOOOOOOO ${body.access_token}")
         val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
-        //  val intent = Intent(this, HomeActivity::class.java)
-        //startActivity(intent)
+
     }
 
     override fun onFailure(t: Throwable) {
