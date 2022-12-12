@@ -10,4 +10,7 @@ interface CotizacionesApi {
 
     @POST("work/{id}/finish")
     fun finishWork(@Path("id") id: Int, @Header("Authorization") token : String): Call<ResponseBody>
+
+    @POST("work/{id}/dismiss")
+    fun discardWork(@Path("id") id: Int, @Header("Authorization") token : String): Call<ResponseBody>
 }

@@ -26,6 +26,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+
     }
 
     /**
@@ -41,7 +43,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap = googleMap
 
         // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
+        val latitude = intent.extras?.getString("latitude")?.toDouble()
+        val longitude = intent.extras?.getString("longitude")?.toDouble()
+        val indicacinoes = intent.extras?.getString("indicaciones")
+        val sydney = LatLng(latitude!!, longitude!!)
         mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
     }

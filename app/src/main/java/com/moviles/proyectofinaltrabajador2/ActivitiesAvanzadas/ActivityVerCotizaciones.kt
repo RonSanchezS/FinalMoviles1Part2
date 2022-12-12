@@ -17,7 +17,8 @@ import com.moviles.proyectofinaltrabajador2.repository.WorkerRepository
 
 class ActivityVerCotizaciones : AppCompatActivity(), WorkerRepository.onCotizacionListener,
     CotizacionesAdapter.OnCotizacionClickListener,
-    ConversacionRepository.onCotizacionFinalizadaListener {
+    ConversacionRepository.onCotizacionFinalizadaListener,
+    ConversacionRepository.onCotizacionDescartadaListener {
 
     private lateinit var recyclerCotizaciones: RecyclerView
 
@@ -77,11 +78,26 @@ class ActivityVerCotizaciones : AppCompatActivity(), WorkerRepository.onCotizaci
         }
     }
 
+    override fun onDescartarClick(cotizacion: CotizacionConpleta) {
+        val token = getSharedPreferences("MyPref", MODE_PRIVATE).getString("token", "")
+        if (token != null) {
+            ConversacionRepository.descartarCotizacion(cotizacion.id.toString(),token, this)
+        }
+    }
+
     override fun onCotizacionFinalizadaFailure(t: Throwable) {
         println(t.message)
     }
 
     override fun onCotizacionFinalizadaSuccess() {
+        finish()
+    }
+
+    override fun onDescartarCotizacionFailure(t: Throwable) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onDescartarCotizacionSuccess() {
         finish()
     }
 }

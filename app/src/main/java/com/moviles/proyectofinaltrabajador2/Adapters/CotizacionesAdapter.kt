@@ -66,7 +66,13 @@ class CotizacionesAdapter(
             -2 -> {
                 holder.txtEstadoCotizacion.text = "Rechazada"
                 holder.btnAccion.text = "Contraoferta"
+                holder.btnAccion.setOnClickListener {
+                    listener.onSendCostClick(cotizacion)
+                }
                 holder.btnDescartar.visibility = View.VISIBLE
+                holder.btnDescartar.setOnClickListener {
+                    listener.onDescartarClick(cotizacion)
+                }
             }
             3 -> {
                 holder.txtEstadoCotizacion.text = "Finalizada"
@@ -105,5 +111,6 @@ class CotizacionesAdapter(
         fun onCotizacionClick(cotizacion: CotizacionConpleta)
          fun onSendCostClick(cotizacion: CotizacionConpleta)
         fun onFinalizadoClick(cotizacion: CotizacionConpleta)
+        fun onDescartarClick(cotizacion: CotizacionConpleta)
     }
 }

@@ -1,5 +1,6 @@
 package com.moviles.proyectofinaltrabajador2
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -7,6 +8,7 @@ import android.os.Environment
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,14 +17,18 @@ import com.moviles.proyectofinaltrabajador2.models.Charla
 import com.moviles.proyectofinaltrabajador2.models.Imagen
 import com.moviles.proyectofinaltrabajador2.models.Mensaje
 import com.moviles.proyectofinaltrabajador2.repository.ConversacionRepository
+import com.moviles.proyectofinaltrabajador2.repository.ConversacionRepository.sendImage
+import com.moviles.proyectofinaltrabajador2.repository.ImageController
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
+import java.lang.Exception
 
 
 class ConversacionActivity : AppCompatActivity(), ConversacionRepository.onGetCharlaListener,
-    ConversacionRepository.onEnviarMensajeListener, ConversacionRepository.onImagenSentListener {
+    ConversacionRepository.onEnviarMensajeListener, ConversacionRepository.onImagenSentListener,
+    ConversacionRepository.onProfilePictureUploadListener {
 
     private lateinit var recyclerMensaje: RecyclerView
 
@@ -33,6 +39,18 @@ class ConversacionActivity : AppCompatActivity(), ConversacionRepository.onGetCh
     private lateinit var btnEnviarImagen: ImageButton
 
     private lateinit var selectedFile: Uri
+
+    var resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                storeImage(result.data?.data!!)
+            }
+        }
+
+    private fun storeImage(dataUri: Uri) {
+        ImageController.saveImage(this, 1, dataUri)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_conversacion)
@@ -56,8 +74,24 @@ class ConversacionActivity : AppCompatActivity(), ConversacionRepository.onGetCh
 
     }
 
+
+    private fun sendImage(image: Uri) {
+        val id = intent.extras?.get("idCotizacion").toString()
+        val token = getSharedPreferences("MyPref", MODE_PRIVATE).getString("token", "")
+        if (token != null) {
+            ConversacionRepository.uploadProfilePicture(id, token, image, this)
+        }
+
+    }
+
     private fun setUpListeners() {
         btnEnviar.setOnClickListener {
+
+            if (inputTexto.text.isEmpty()) {
+                sendImage(ImageController.getImage(this))
+                return@setOnClickListener
+            }
+
             val texto = inputTexto.text.toString()
             if (texto.isNotEmpty()) {
                 val mensaje = Mensaje(texto)
@@ -73,15 +107,24 @@ class ConversacionActivity : AppCompatActivity(), ConversacionRepository.onGetCh
             }
         }
         btnEnviarImagen.setOnClickListener {
-            val intent = Intent(Intent.ACTION_GET_CONTENT)
-            intent.type = "image/*"
-            startActivityForResult(intent, 111)
+            ImageController.selectPhotoFromGallery(resultLauncher)
+
 
         }
         btnEnviarUbicacion.setOnClickListener {
             val intent = Intent(this, MapsActivity::class.java)
-
-            startActivity(intent)
+            val latitude = intent.extras?.get("latitude").toString()
+            val longitude = intent.extras?.get("longitude").toString()
+            val indicaciones = intent.extras?.get("indicaciones").toString()
+            intent.putExtra("latitude", latitude)
+            intent.putExtra("longitude", longitude)
+            intent.putExtra("indicaciones", indicaciones)
+            Toast.makeText(
+                this,
+                "Latitude: $latitude, Longitude: $longitude, Indicaciones: $indicaciones",
+                Toast.LENGTH_LONG
+            ).show()
+              startActivity(intent)
         }
     }
 
@@ -134,7 +177,15 @@ class ConversacionActivity : AppCompatActivity(), ConversacionRepository.onGetCh
     }
 
     override fun onImagenSentSuccess(body: Charla) {
-        TODO("Not yet implemented")
+        setUpApiCall()
+    }
+
+    override fun onProfilePictureFailed(exception: Exception) {
+        setUpApiCall()
+    }
+
+    override fun onProfilePictureSuccess(body: Mensaje) {
+        setUpApiCall()
     }
 
 }
