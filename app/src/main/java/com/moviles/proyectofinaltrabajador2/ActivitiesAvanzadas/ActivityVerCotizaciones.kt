@@ -55,17 +55,27 @@ class ActivityVerCotizaciones : AppCompatActivity(), WorkerRepository.onCotizaci
     }
 
     override fun onCotizacionClick(cotizacion: CotizacionConpleta) {
-       Toast.makeText(this, "Cotizacion: ${cotizacion.id}", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Cotizacion: ${cotizacion.id}", Toast.LENGTH_SHORT).show()
         val intent = Intent(this, ConversacionActivity::class.java)
         intent.putExtra("idCotizacion", cotizacion.id)
-        intent.putExtra("latitude", cotizacion.deliveryLatitude)
-        intent.putExtra("longitude", cotizacion.deliveryLongitude)
-        intent.putExtra("indicaciones", cotizacion.deliveryAddress)
+        intent.putExtra("latitud", cotizacion.deliveryLatitude)
+        intent.putExtra("longitud", cotizacion.deliveryLongitude)
+        intent.putExtra("instruccion", cotizacion.deliveryAddress)
+        println(cotizacion.deliveryLatitude)
+        println(cotizacion.deliveryLongitude)
+        println(cotizacion.deliveryAddress)
         startActivity(intent)
     }
 
+    //add onResume
+    override fun onResume() {
+        super.onResume()
+        getCallFromApi()
+    }
+
     override fun onSendCostClick(cotizacion: CotizacionConpleta) {
-        Toast.makeText(this, "Enviando cotizacion numero ${cotizacion.id}", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Enviando cotizacion numero ${cotizacion.id}", Toast.LENGTH_SHORT)
+            .show()
         val intent = Intent(this, ActivityCostoCotizacion::class.java)
         intent.putExtra("COTIZACIONID", cotizacion.id)
         startActivity(intent)
@@ -74,15 +84,16 @@ class ActivityVerCotizaciones : AppCompatActivity(), WorkerRepository.onCotizaci
     override fun onFinalizadoClick(cotizacion: CotizacionConpleta) {
         val token = getSharedPreferences("MyPref", MODE_PRIVATE).getString("token", "")
         if (token != null) {
-            ConversacionRepository.finalizarCotizacion(cotizacion.id.toString(),token, this)
+            ConversacionRepository.finalizarCotizacion(cotizacion.id.toString(), token, this)
         }
     }
 
     override fun onDescartarClick(cotizacion: CotizacionConpleta) {
         val token = getSharedPreferences("MyPref", MODE_PRIVATE).getString("token", "")
         if (token != null) {
-            ConversacionRepository.descartarCotizacion(cotizacion.id.toString(),token, this)
+            ConversacionRepository.descartarCotizacion(cotizacion.id.toString(), token, this)
         }
+
     }
 
     override fun onCotizacionFinalizadaFailure(t: Throwable) {
@@ -90,15 +101,15 @@ class ActivityVerCotizaciones : AppCompatActivity(), WorkerRepository.onCotizaci
     }
 
     override fun onCotizacionFinalizadaSuccess() {
-        finish()
+        getCallFromApi()
     }
 
     override fun onDescartarCotizacionFailure(t: Throwable) {
-        TODO("Not yet implemented")
+        println(t)
     }
 
     override fun onDescartarCotizacionSuccess() {
-        finish()
+        getCallFromApi()
     }
 }
 

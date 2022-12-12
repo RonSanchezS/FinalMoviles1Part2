@@ -112,19 +112,20 @@ class ConversacionActivity : AppCompatActivity(), ConversacionRepository.onGetCh
 
         }
         btnEnviarUbicacion.setOnClickListener {
+            val latitud = intent.extras?.get("latitud")
+            val longitud = intent.extras?.get("longitud")
+            val instruccion = intent.extras?.get("instruccion")
+
+            //if there isnt latitud or longitud, then we disable the button
+            if (latitud == null || longitud == null) {
+                Toast.makeText(this, "No hay ubicacion para acceder", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             val intent = Intent(this, MapsActivity::class.java)
-            val latitude = intent.extras?.get("latitude").toString()
-            val longitude = intent.extras?.get("longitude").toString()
-            val indicaciones = intent.extras?.get("indicaciones").toString()
-            intent.putExtra("latitude", latitude)
-            intent.putExtra("longitude", longitude)
-            intent.putExtra("indicaciones", indicaciones)
-            Toast.makeText(
-                this,
-                "Latitude: $latitude, Longitude: $longitude, Indicaciones: $indicaciones",
-                Toast.LENGTH_LONG
-            ).show()
-              startActivity(intent)
+            intent.putExtra("latitud", latitud.toString())
+            intent.putExtra("longitud", longitud.toString())
+            intent.putExtra("instruccion", instruccion.toString())
+            startActivity(intent)
         }
     }
 
@@ -164,17 +165,14 @@ class ConversacionActivity : AppCompatActivity(), ConversacionRepository.onGetCh
     }
 
     override fun onEnviarMensajeFailure(t: Throwable) {
-        println(t.message)
-    }
+        setUpApiCall()    }
 
     override fun onEnviarMensajeSuccess(body: Charla) {
-        inputTexto.setText("nada")
-        //  setUpApiCall()
+        setUpApiCall()
     }
 
     override fun onImagenSentFailure(t: Throwable) {
-        println(t.toString())
-    }
+        setUpApiCall()    }
 
     override fun onImagenSentSuccess(body: Charla) {
         setUpApiCall()
