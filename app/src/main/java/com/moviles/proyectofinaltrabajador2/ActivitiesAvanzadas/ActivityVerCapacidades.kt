@@ -51,7 +51,7 @@ class ActivityVerCapacidades : AppCompatActivity(), WorkerRepository.onCapacidad
     override fun onSuccess(workerCompleto: WorkerCompleto?) {
         println("workerCompleto: ${workerCompleto}")
         val cotizaciones = workerCompleto?.categories
-        val adapter = CapacidadesAdapter(cotizaciones!! as ArrayList<Categories>, this)
+        val adapter = CapacidadesAdapter(cotizaciones!!, this)
         recyclerCapacidades.layoutManager = LinearLayoutManager(this)
         recyclerCapacidades.adapter = adapter
 
@@ -59,7 +59,6 @@ class ActivityVerCapacidades : AppCompatActivity(), WorkerRepository.onCapacidad
     override fun onResume() {
         super.onResume()
         setUpCallFromApi()
-
     }
     override fun onCapacidadClickListener(capacidad: Categories) {
         val intent  = Intent(this, com.moviles.proyectofinaltrabajador2.EditarCapacidad.ActivityEditarCapacidades::class.java)

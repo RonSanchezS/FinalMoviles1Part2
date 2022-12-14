@@ -48,6 +48,9 @@ class MainActivity : AppCompatActivity(), LoginRepository.onRegisterListener {
            LoginRepository.register(user,this,this)
 
         }
+        btnVolver.setOnClickListener {
+            finish()
+        }
     }
 
     private fun setUpListView() {
