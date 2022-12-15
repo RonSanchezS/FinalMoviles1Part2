@@ -37,6 +37,8 @@ class ConversacionActivity : AppCompatActivity(), ConversacionRepository.onGetCh
 
     private lateinit var selectedFile: Uri
 
+    private var id: String = ""
+
     var resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -108,8 +110,9 @@ class ConversacionActivity : AppCompatActivity(), ConversacionRepository.onGetCh
 
 
         }
-        btnEnviarUbicacion.setOnClickListener{
+        btnEnviarUbicacion.setOnClickListener {
             val intent = Intent(this, ActivitySeleccionarUbicacion::class.java)
+            intent.putExtra("idCotizacion", id)
             startActivity(intent)
         }
     }
@@ -123,7 +126,7 @@ class ConversacionActivity : AppCompatActivity(), ConversacionRepository.onGetCh
     }
 
     private fun setUpApiCall() {
-        val id = intent.extras?.get("idCotizacion").toString()
+        id = intent.extras?.get("idCotizacion").toString()
         //get token from shared prefferences
         val token = getSharedPreferences("MyPref", MODE_PRIVATE).getString("token", "")
 
@@ -159,7 +162,8 @@ class ConversacionActivity : AppCompatActivity(), ConversacionRepository.onGetCh
     }
 
     override fun onImagenSentFailure(t: Throwable) {
-        setUpApiCall()    }
+        setUpApiCall()
+    }
 
     override fun onImagenSentSuccess(body: Charla) {
         setUpApiCall()
@@ -176,8 +180,8 @@ class ConversacionActivity : AppCompatActivity(), ConversacionRepository.onGetCh
     override fun onMapClick(charla: Charla) {
         Toast.makeText(this, charla.toString(), Toast.LENGTH_SHORT).show()
         val intent = Intent(this, Ubicacion::class.java)
-        intent.putExtra("latitud",charla.latitude.toString())
-        intent.putExtra("longitud",charla.longitude.toString())
+        intent.putExtra("latitud", charla.latitude.toString())
+        intent.putExtra("longitud", charla.longitude.toString())
         startActivity(intent)
     }
 

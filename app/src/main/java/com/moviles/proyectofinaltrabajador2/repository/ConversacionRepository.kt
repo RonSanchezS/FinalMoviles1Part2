@@ -7,6 +7,7 @@ import com.moviles.proyectofinaltrabajador2.apis.MensajesApi
 import com.moviles.proyectofinaltrabajador2.models.Charla
 import com.moviles.proyectofinaltrabajador2.models.Imagen
 import com.moviles.proyectofinaltrabajador2.models.Mensaje
+import com.moviles.proyectofinaltrabajador2.models.Ubicacion
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -51,6 +52,35 @@ object ConversacionRepository {
         )
 
 
+
+    }
+    fun uploadLocation(ubicacion: Ubicacion, token : String, id: String, listener: onUbicacionListener){
+        val retrofit = RetrofitRepository.getRetrofit()
+        val conversacionApi = retrofit.create(ConversacionApi::class.java)
+        conversacionApi.enviarUbicacion("Bearer $token", id, ubicacion)
+            .enqueue(object : Callback<Charla> {
+                override fun onResponse(
+                    call: Call<Charla>,
+                    response: Response<Charla>
+                ) {
+                    if (response.isSuccessful) {
+                        println(response.body()!!)
+                        listener.onUbicacionSuccess(response.body()!!)
+                    } else {
+                        listener.onUbicacionError(Throwable("Error al enviar ubicacion ${response.code()}"))
+                    }
+                }
+
+                override fun onFailure(call: Call<Charla>, t: Throwable) {
+                    println(t.message)
+                }
+
+            })
+    }
+
+    interface onUbicacionListener {
+        fun onUbicacionError(throwable: Throwable)
+        fun onUbicacionSuccess(body: Charla)
 
     }
 

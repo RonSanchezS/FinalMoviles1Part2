@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import com.moviles.proyectofinaltrabajador2.ActivitiesAvanzadas.ActivitySubirFotoTrabajador
 import com.moviles.proyectofinaltrabajador2.ActivitiesAvanzadas.ActivityVerCapacidades
 import com.moviles.proyectofinaltrabajador2.ActivitiesAvanzadas.ActivityVerCotizaciones
 import com.moviles.proyectofinaltrabajador2.models.Usuario
@@ -15,6 +16,7 @@ class HomeActivity : AppCompatActivity(), LoginRepository.onDatosLoginListener {
     private lateinit var btnCapacidades: Button
     private lateinit var btnCotizaciones: Button
     private lateinit var btnLogout: Button
+    private lateinit var btnSubirFoto: Button
     private lateinit var txtNombreUsuario: TextView
 
     private lateinit var idUsuario : String
@@ -50,6 +52,11 @@ class HomeActivity : AppCompatActivity(), LoginRepository.onDatosLoginListener {
             editor.apply()
             finish()
         }
+        btnSubirFoto.setOnClickListener {
+            val intent = Intent(this, ActivitySubirFotoTrabajador::class.java)
+            intent.putExtra("idTrabajador", idUsuario)
+            startActivity(intent)
+        }
     }
 
     private fun setUpListView() {
@@ -57,7 +64,7 @@ class HomeActivity : AppCompatActivity(), LoginRepository.onDatosLoginListener {
         btnCotizaciones = findViewById(R.id.btnVerCotizaciones)
         btnLogout = findViewById(R.id.btnLogout)
         txtNombreUsuario = findViewById(R.id.txtNombreUsuario)
-
+        btnSubirFoto = findViewById(R.id.btnSubirFoto)
 
     }
 

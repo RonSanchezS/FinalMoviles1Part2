@@ -17,7 +17,13 @@
         android:theme="@style/Theme.ProyectoFinalTrabajador2"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
+        <activity
+            android:name=".ActivitiesAvanzadas.ActivitySubirFotoTrabajador"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -31,7 +37,7 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="YOUR_API_KEY" />
+            android:value="AIzaSyBAXfRes5tSN7fu8FWIWoL-D_LCvq2yJpQ" />
 
         <activity
             android:name=".ActivitiesAvanzadas.ActivityVerCotizaciones"
@@ -81,7 +87,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ActivitiesAvanzadas.ActivityVerCotizaciones"
+            android:name=".ActivitiesAvanzadas.ActivitySeleccionarUbicacion"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

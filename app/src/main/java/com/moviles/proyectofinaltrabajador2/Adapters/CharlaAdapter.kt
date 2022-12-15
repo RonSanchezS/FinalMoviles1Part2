@@ -87,9 +87,11 @@ class CharlaAdapter(val data: ArrayList<Charla>, val idLocal: String, val listen
             } else {
                 holder.imagenSaliente.visibility = View.GONE
             }
+
             holder.nombreLocal.text = itemCharla.user?.name
             holder.mensajeLocal.text = itemCharla.message
-
+            holder.mensajeLocal.visibility = View.VISIBLE
+            holder.nombreLocal.visibility = View.VISIBLE
             ocultarMensajesEntrantes(holder)
         } else {
             if (itemCharla.latitude != null && itemCharla.longitude != null) {
@@ -126,6 +128,9 @@ class CharlaAdapter(val data: ArrayList<Charla>, val idLocal: String, val listen
             }
             holder.nombre.text = itemCharla.user?.name
             holder.mensaje.text = itemCharla.message
+
+            holder.mensaje.visibility = View.VISIBLE
+            holder.nombre.visibility = View.VISIBLE
 
             ocultarMensajesSalientes(holder)
         }

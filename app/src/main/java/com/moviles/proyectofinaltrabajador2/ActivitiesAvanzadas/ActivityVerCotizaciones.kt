@@ -54,7 +54,7 @@ class ActivityVerCotizaciones : AppCompatActivity(), WorkerRepository.onCotizaci
     }
 
     override fun onCotizacionClick(cotizacion: CotizacionConpleta) {
-        Toast.makeText(this, "Cotizacion: ${cotizacion.id}", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this, "Cotizacion: ${cotizacion.id}", Toast.LENGTH_SHORT).show()
         val intent = Intent(this, ConversacionActivity::class.java)
         intent.putExtra("idCotizacion", cotizacion.id)
         intent.putExtra("latitud", cotizacion.deliveryLatitude)
@@ -63,6 +63,7 @@ class ActivityVerCotizaciones : AppCompatActivity(), WorkerRepository.onCotizaci
         println(cotizacion.deliveryLatitude)
         println(cotizacion.deliveryLongitude)
         println(cotizacion.deliveryAddress)
+        //Toast.makeText(this, "Cotizacion: ${cotizacion.id}", Toast.LENGTH_SHORT).show()
         startActivity(intent)
     }
 

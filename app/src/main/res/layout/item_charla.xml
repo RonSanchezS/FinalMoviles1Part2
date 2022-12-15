@@ -8,6 +8,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#00FFFFFF"
+        android:dividerPadding="10dp"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -16,6 +18,8 @@
             android:id="@+id/nombreUsuario"
             android:layout_width="181dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
             android:fontFamily="@font/roboto_medium"
             android:text="TextView"
             tools:text="Pedro Picapiedra" />
@@ -23,7 +27,9 @@
         <TextView
             android:id="@+id/mensaje"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
             android:fontFamily="@font/roboto_medium"
             android:text="TextView"
             tools:text="Buenas tardes, quisiera una orden de tacos asados al pastor, triple salsa y extra large" />
@@ -32,6 +38,9 @@
             android:id="@+id/nombreUsuarioLocal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:fontFamily="@font/roboto_medium"
             android:gravity="right"
             android:text="Juanito Manos largas" />
 
@@ -39,24 +48,30 @@
             android:id="@+id/mensajeLocal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:fontFamily="@font/roboto_medium"
             android:gravity="right"
             android:text="Y si no quiero que a la verga, miren todos jaj quiere tacos en una aplicacion de trabajo" />
 
         <com.google.android.gms.maps.MapView
             android:id="@+id/mapaEntrante"
             android:layout_width="118dp"
-            android:layout_height="128dp" />
+            android:layout_height="128dp"
+            android:layout_marginLeft="15dp" />
 
         <com.google.android.gms.maps.MapView
             android:id="@+id/mapaSaliente"
             android:layout_width="120dp"
             android:layout_height="132dp"
-            android:layout_gravity="right" />
+            android:layout_gravity="right"
+            android:layout_marginRight="15dp" />
 
         <ImageView
             android:id="@+id/imagenEntrante"
             android:layout_width="141dp"
             android:layout_height="141dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginBottom="15dp"
             tools:srcCompat="@tools:sample/avatars" />
 
         <ImageView
@@ -64,6 +79,8 @@
             android:layout_width="141dp"
             android:layout_height="141dp"
             android:layout_gravity="right"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"
             tools:srcCompat="@tools:sample/avatars" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

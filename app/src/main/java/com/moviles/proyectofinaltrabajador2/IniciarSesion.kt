@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.startActivity
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.moviles.proyectofinaltrabajador2.models.LoginResponse
@@ -79,7 +80,13 @@ class IniciarSesion : AppCompatActivity(), LoginRepository.onLoginListener {
             if (mail.isEmpty() || pass.isEmpty()) {
                 return@setOnClickListener
             }
-            val worker = WorkerLogin(mail, pass, tokenDeFirebase)
+            var worker = WorkerLogin(mail, pass, "")
+            if(tokenDeFirebase.isEmpty()){
+                Toast.makeText(this, "No se pudo obtener el token de firebase", Toast.LENGTH_SHORT).show()
+                 worker = WorkerLogin(mail, pass, "test_id")
+            }else{
+                 worker = WorkerLogin(mail, pass, tokenDeFirebase)
+            }
             //   Toast.makeText(this, "Login $worker", Toast.LENGTH_SHORT).show()
             LoginRepository.login(worker, this, this);
         }
