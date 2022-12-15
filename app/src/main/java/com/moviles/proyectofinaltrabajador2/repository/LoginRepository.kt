@@ -1,7 +1,6 @@
 package com.moviles.proyectofinaltrabajador2.repository
 
 import android.content.Context
-import android.widget.Toast
 import com.moviles.proyectofinaltrabajador2.apis.LoginApi
 import com.moviles.proyectofinaltrabajador2.models.LoginResponse
 import com.moviles.proyectofinaltrabajador2.models.Usuario

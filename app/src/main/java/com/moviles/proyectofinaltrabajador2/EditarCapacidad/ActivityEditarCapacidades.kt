@@ -2,12 +2,9 @@ package com.moviles.proyectofinaltrabajador2.EditarCapacidad
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.security.identity.AccessControlProfileId
 import android.util.Log
 import android.widget.*
-import com.moviles.proyectofinaltrabajador2.Items.Capacidad
 import com.moviles.proyectofinaltrabajador2.R
-import com.moviles.proyectofinaltrabajador2.models.Categories
 import com.moviles.proyectofinaltrabajador2.models.CategoriesPostResponse
 import com.moviles.proyectofinaltrabajador2.models.Category
 import com.moviles.proyectofinaltrabajador2.models.CategoryPost

@@ -3,7 +3,6 @@ package com.moviles.proyectofinaltrabajador2.apis
 import com.moviles.proyectofinaltrabajador2.models.Charla
 import com.moviles.proyectofinaltrabajador2.models.Imagen
 import com.moviles.proyectofinaltrabajador2.models.Mensaje
-import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*
 

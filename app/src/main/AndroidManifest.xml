@@ -31,8 +31,16 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBAXfRes5tSN7fu8FWIWoL-D_LCvq2yJpQ" />
+            android:value="YOUR_API_KEY" />
 
+        <activity
+            android:name=".ActivitiesAvanzadas.ActivityVerCotizaciones"
+            android:exported="false"
+            android:label="@string/title_activity_seleccionar_ubicacion" />
+        <activity
+            android:name=".ActivitiesAvanzadas.Ubicacion"
+            android:exported="false"
+            android:label="@string/title_activity_ubicacion" />
         <activity
             android:name=".MapsActivity"
             android:exported="false"

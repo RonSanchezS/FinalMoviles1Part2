@@ -1,10 +1,10 @@
 package com.moviles.proyectofinaltrabajador2
 
 import android.app.Activity
+import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
@@ -12,23 +12,20 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.moviles.proyectofinaltrabajador2.ActivitiesAvanzadas.ActivitySeleccionarUbicacion
+import com.moviles.proyectofinaltrabajador2.ActivitiesAvanzadas.Ubicacion
 import com.moviles.proyectofinaltrabajador2.Adapters.CharlaAdapter
 import com.moviles.proyectofinaltrabajador2.models.Charla
-import com.moviles.proyectofinaltrabajador2.models.Imagen
+import com.moviles.proyectofinaltrabajador2.models.Location
 import com.moviles.proyectofinaltrabajador2.models.Mensaje
 import com.moviles.proyectofinaltrabajador2.repository.ConversacionRepository
-import com.moviles.proyectofinaltrabajador2.repository.ConversacionRepository.sendImage
 import com.moviles.proyectofinaltrabajador2.repository.ImageController
-import okhttp3.MediaType
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import java.io.File
 import java.lang.Exception
 
 
 class ConversacionActivity : AppCompatActivity(), ConversacionRepository.onGetCharlaListener,
     ConversacionRepository.onEnviarMensajeListener, ConversacionRepository.onImagenSentListener,
-    ConversacionRepository.onProfilePictureUploadListener {
+    ConversacionRepository.onProfilePictureUploadListener, CharlaAdapter.onMapClickListener {
 
     private lateinit var recyclerMensaje: RecyclerView
 
@@ -111,20 +108,8 @@ class ConversacionActivity : AppCompatActivity(), ConversacionRepository.onGetCh
 
 
         }
-        btnEnviarUbicacion.setOnClickListener {
-            val latitud = intent.extras?.get("latitud")
-            val longitud = intent.extras?.get("longitud")
-            val instruccion = intent.extras?.get("instruccion")
-
-            //if there isnt latitud or longitud, then we disable the button
-            if (latitud == null || longitud == null) {
-                Toast.makeText(this, "No hay ubicacion para acceder", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            val intent = Intent(this, MapsActivity::class.java)
-            intent.putExtra("latitud", latitud.toString())
-            intent.putExtra("longitud", longitud.toString())
-            intent.putExtra("instruccion", instruccion.toString())
+        btnEnviarUbicacion.setOnClickListener{
+            val intent = Intent(this, ActivitySeleccionarUbicacion::class.java)
             startActivity(intent)
         }
     }
@@ -158,14 +143,16 @@ class ConversacionActivity : AppCompatActivity(), ConversacionRepository.onGetCh
     override fun onGetCharlaSuccess(body: Any) {
         //  Toast.makeText(this, "Success: ${body}", Toast.LENGTH_SHORT).show()
         val idLocal = getSharedPreferences("MyPref", MODE_PRIVATE).getString("id", "")
-        val adapter = CharlaAdapter(body as ArrayList<Charla>, idLocal!!)
+        val adapter = CharlaAdapter(body as ArrayList<Charla>, idLocal!!, this)
         recyclerMensaje.layoutManager = LinearLayoutManager(this)
         recyclerMensaje.adapter = adapter
 
     }
 
     override fun onEnviarMensajeFailure(t: Throwable) {
-        setUpApiCall()    }
+        setUpApiCall()
+
+    }
 
     override fun onEnviarMensajeSuccess(body: Charla) {
         setUpApiCall()
@@ -184,6 +171,14 @@ class ConversacionActivity : AppCompatActivity(), ConversacionRepository.onGetCh
 
     override fun onProfilePictureSuccess(body: Mensaje) {
         setUpApiCall()
+    }
+
+    override fun onMapClick(charla: Charla) {
+        Toast.makeText(this, charla.toString(), Toast.LENGTH_SHORT).show()
+        val intent = Intent(this, Ubicacion::class.java)
+        intent.putExtra("latitud",charla.latitude.toString())
+        intent.putExtra("longitud",charla.longitude.toString())
+        startActivity(intent)
     }
 
 }

@@ -3,11 +3,12 @@ package com.moviles.proyectofinaltrabajador2.Adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.TransformationUtils.centerCrop
 import com.moviles.proyectofinaltrabajador2.Items.CotizacionConpleta
 import com.moviles.proyectofinaltrabajador2.R
 
@@ -40,6 +41,15 @@ class CotizacionesAdapter(
             holder.txtPrecioCotizacion.text = "Sin cotizar"
         }else{
             holder.txtPrecioCotizacion.text = cotizacion.priceOffer.toString()
+        }
+        holder.lblRating.visibility = View.GONE
+        holder.BtnHayMapa.visibility = View.GONE
+
+        if(cotizacion.deliveryLatitude != null && cotizacion.deliveryLongitude != null){
+            holder.BtnHayMapa.visibility = View.VISIBLE
+            holder.BtnHayMapa.setOnClickListener {
+                listener.onMapaClick(cotizacion)
+            }
         }
         when(cotizacion.status){
             0 -> {
@@ -85,7 +95,8 @@ class CotizacionesAdapter(
             4 -> {
                 holder.txtEstadoCotizacion.text = "Calificado"
                 holder.btnAccion.visibility = View.GONE
-
+                holder.lblRating.visibility = View.VISIBLE
+                holder.lblRating.rating = cotizacion.review?.toFloat()!!
             }
         }
         Glide
@@ -105,6 +116,8 @@ class CotizacionesAdapter(
         val btnAccion = itemView.findViewById<TextView>(R.id.btnAccion)
         val btnDescartar = itemView.findViewById<TextView>(R.id.btnDescartar)
         val imgUsuario = itemView.findViewById<ImageView>(R.id.imgUsuario)
+        val lblRating = itemView.findViewById<RatingBar>(R.id.lblRating)
+        val BtnHayMapa = itemView.findViewById<ImageView>(R.id.BtnHayMapa)
     }
 
     interface OnCotizacionClickListener {
@@ -112,5 +125,6 @@ class CotizacionesAdapter(
          fun onSendCostClick(cotizacion: CotizacionConpleta)
         fun onFinalizadoClick(cotizacion: CotizacionConpleta)
         fun onDescartarClick(cotizacion: CotizacionConpleta)
+        fun onMapaClick(cotizacion: CotizacionConpleta)
     }
 }

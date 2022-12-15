@@ -2,7 +2,6 @@ package com.moviles.proyectofinaltrabajador2.repository
 
 import android.util.Log
 import com.moviles.proyectofinaltrabajador2.apis.CategoriesApi
-import com.moviles.proyectofinaltrabajador2.models.Categories
 import com.moviles.proyectofinaltrabajador2.models.CategoriesPostResponse
 import com.moviles.proyectofinaltrabajador2.models.Category
 import com.moviles.proyectofinaltrabajador2.models.CategoryPost

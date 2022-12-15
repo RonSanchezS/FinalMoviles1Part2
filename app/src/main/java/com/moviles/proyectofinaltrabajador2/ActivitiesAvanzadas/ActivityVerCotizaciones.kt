@@ -4,13 +4,12 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.moviles.proyectofinaltrabajador2.Adapters.CotizacionesAdapter
 import com.moviles.proyectofinaltrabajador2.ConversacionActivity
 import com.moviles.proyectofinaltrabajador2.Items.CotizacionConpleta
+import com.moviles.proyectofinaltrabajador2.MapsActivity
 import com.moviles.proyectofinaltrabajador2.R
 import com.moviles.proyectofinaltrabajador2.repository.ConversacionRepository
 import com.moviles.proyectofinaltrabajador2.repository.WorkerRepository
@@ -94,6 +93,14 @@ class ActivityVerCotizaciones : AppCompatActivity(), WorkerRepository.onCotizaci
             ConversacionRepository.descartarCotizacion(cotizacion.id.toString(), token, this)
         }
 
+    }
+
+    override fun onMapaClick(cotizacion: CotizacionConpleta) {
+        val intent = Intent(this, MapsActivity::class.java)
+        intent.putExtra("latitud", cotizacion.deliveryLatitude)
+        intent.putExtra("longitud", cotizacion.deliveryLongitude)
+        intent.putExtra("instruccion", cotizacion.deliveryAddress)
+        startActivity(intent)
     }
 
     override fun onCotizacionFinalizadaFailure(t: Throwable) {

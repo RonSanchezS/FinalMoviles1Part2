@@ -11,7 +11,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import com.moviles.proyectofinaltrabajador2.MainActivity
+import com.moviles.proyectofinaltrabajador2.IniciarSesion
 import com.moviles.proyectofinaltrabajador2.R
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
@@ -81,6 +81,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         Log.d(TAG, "Short lived task is done.")
         //AQUI HACEN LA REDIRECCION A LA ACTIVIDAD QUE QUIERAN, TIENEN QUE OBTENER LOS DATOS QUE ESTAN EN EL MAP
         // SE LES ENVIA EL STATUS CADA VEZ, EN BASE A ESO OBTENGAS LOS RESULTADOS
+
+
     }
 
     /**
@@ -102,7 +104,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
      * @param messageBody FCM message body received.
      */
     private fun sendNotification(messageBody: String, title: String) {
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, IniciarSesion::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         val pendingIntent = PendingIntent.getActivity(
             this, 0 /* Request code */, intent,

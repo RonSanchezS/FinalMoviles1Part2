@@ -1,6 +1,5 @@
 package com.moviles.proyectofinaltrabajador2.apis
 
-import com.moviles.proyectofinaltrabajador2.models.Categories
 import com.moviles.proyectofinaltrabajador2.models.CategoriesPostResponse
 import com.moviles.proyectofinaltrabajador2.models.Category
 import com.moviles.proyectofinaltrabajador2.models.CategoryPost

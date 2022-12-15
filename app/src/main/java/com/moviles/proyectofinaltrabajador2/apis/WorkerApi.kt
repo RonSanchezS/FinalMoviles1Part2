@@ -2,7 +2,6 @@ package com.moviles.proyectofinaltrabajador2.apis
 
 import com.moviles.proyectofinaltrabajador2.Items.CotizacionConpleta
 import com.moviles.proyectofinaltrabajador2.models.Precio
-import com.moviles.proyectofinaltrabajador2.models.Worker
 import com.moviles.proyectofinaltrabajador2.models.WorkerCompleto
 import retrofit2.Call
 import retrofit2.http.Body

@@ -7,15 +7,18 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.MapView
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.moviles.proyectofinaltrabajador2.FullScreenImage
 import com.moviles.proyectofinaltrabajador2.R
 import com.moviles.proyectofinaltrabajador2.models.Charla
 
-class CharlaAdapter(val data: ArrayList<Charla>, val idLocal: String) :
+
+class CharlaAdapter(val data: ArrayList<Charla>, val idLocal: String, val listener : onMapClickListener) :
     RecyclerView.Adapter<CharlaAdapter.CharlaViewHolder>() {
     class CharlaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val nombre = itemView.findViewById<TextView>(R.id.nombreUsuario)
@@ -31,7 +34,10 @@ class CharlaAdapter(val data: ArrayList<Charla>, val idLocal: String) :
         val btnEnviarMapa = itemView.findViewById<ImageButton>(R.id.btnEnviarUbicacion)
     }
 
+    interface onMapClickListener {
+        fun onMapClick(charla: Charla)
 
+    }
 
 
     override fun onCreateViewHolder(
@@ -44,10 +50,25 @@ class CharlaAdapter(val data: ArrayList<Charla>, val idLocal: String) :
 
     override fun onBindViewHolder(holder: CharlaAdapter.CharlaViewHolder, position: Int) {
         val itemCharla = data[position]
-
+        holder.itemView.setOnClickListener {
+            listener.onMapClick(data[position])
+        }
         if (itemCharla.userId == idLocal.toInt()) {
             if (itemCharla.latitude != null && itemCharla.longitude != null) {
                 holder.mapaSaliente.visibility = View.VISIBLE
+                //setUpMap
+                holder.mapaSaliente.onCreate(null)
+                holder.mapaSaliente.onResume()
+                holder.mapaSaliente.getMapAsync {
+                    val latLng =
+                        LatLng(itemCharla.latitude!!.toDouble(), itemCharla.longitude!!.toDouble())
+                    it.addMarker(MarkerOptions().position(latLng))
+                    it.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
+                }
+                holder.mapaSaliente.setOnClickListener {
+                    listener.onMapClick(itemCharla)
+                }
+
             } else {
                 holder.mapaSaliente.visibility = View.GONE
             }
@@ -73,6 +94,18 @@ class CharlaAdapter(val data: ArrayList<Charla>, val idLocal: String) :
         } else {
             if (itemCharla.latitude != null && itemCharla.longitude != null) {
                 holder.mapaentrante.visibility = View.VISIBLE
+                //setUpMap
+                holder.mapaentrante.onCreate(null)
+                holder.mapaentrante.onResume()
+                holder.mapaentrante.getMapAsync {
+                    val latLng =
+                        LatLng(itemCharla.latitude!!.toDouble(), itemCharla.longitude!!.toDouble())
+                    it.addMarker(MarkerOptions().position(latLng))
+                    it.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
+                }
+                holder.mapaentrante.setOnClickListener {
+                    listener.onMapClick(itemCharla)
+                }
             } else {
                 holder.mapaentrante.visibility = View.GONE
             }

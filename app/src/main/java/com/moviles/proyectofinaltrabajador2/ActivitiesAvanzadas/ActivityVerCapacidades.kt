@@ -2,14 +2,10 @@ package com.moviles.proyectofinaltrabajador2.ActivitiesAvanzadas
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.firebase.messaging.FirebaseMessaging
 import com.moviles.proyectofinaltrabajador2.Adapters.CapacidadesAdapter
 import com.moviles.proyectofinaltrabajador2.R
 import com.moviles.proyectofinaltrabajador2.models.Categories

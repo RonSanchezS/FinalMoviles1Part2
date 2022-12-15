@@ -2,4 +2,6 @@
     <string name="app_name">ProyectoFinalTrabajador2</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="default_notification_channel_id">\"default_channel\"</string>
+    <string name="title_activity_ubicacion">Ubicacion</string>
+    <string name="title_activity_seleccionar_ubicacion">ActivitySeleccionarUbicacion</string>
 </resources>
